@@ -1,5 +1,6 @@
 package com.example.auth.controller;
 
+import com.example.auth.BaseControllerTest;
 import com.example.auth.dto.AuthResponse;
 import com.example.auth.dto.LoginRequest;
 import com.example.auth.dto.RegisterRequest;
@@ -21,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class AuthControllerTest {
+class AuthControllerTest extends BaseControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -40,7 +41,7 @@ class AuthControllerTest {
         request.setFullName("Test User");
 
         when(authService.register(any(RegisterRequest.class)))
-            .thenReturn(new AuthResponse("jwt-token"));
+                .thenReturn(new AuthResponse("jwt-token"));
 
         mockMvc.perform(post("/api/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -58,7 +59,7 @@ class AuthControllerTest {
         request.setFullName("Test User");
 
         when(authService.register(any(RegisterRequest.class)))
-            .thenThrow(new EmailAlreadyExistsException("Email already registered"));
+                .thenThrow(new EmailAlreadyExistsException("Email already registered"));
 
         mockMvc.perform(post("/api/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -75,7 +76,7 @@ class AuthControllerTest {
         request.setPassword("password");
 
         when(authService.login(any(LoginRequest.class)))
-            .thenReturn(new AuthResponse("jwt-token"));
+                .thenReturn(new AuthResponse("jwt-token"));
 
         mockMvc.perform(post("/api/auth/login")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -84,4 +85,4 @@ class AuthControllerTest {
                 .andExpect(jsonPath("$.status").value(200))
                 .andExpect(jsonPath("$.data.token").value("jwt-token"));
     }
-} 
+}

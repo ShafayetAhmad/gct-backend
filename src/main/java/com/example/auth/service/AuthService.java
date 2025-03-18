@@ -23,16 +23,24 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
     public AuthResponse register(RegisterRequest request) {
+        System.out.println("Registering user with email: " + request.getEmail());
+
+        System.out.println("here");
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            System.out.println("Email already registered: " + request.getEmail());
             throw new EmailAlreadyExistsException("Email already registered");
         }
 
+        System.out.println("here 1");
         var user = new User();
+
+        System.out.println("here 2");
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setFullName(request.getFullName());
 
         userRepository.save(user);
+        System.out.println("User registered successfully: " + user.getEmail());
 
         var jwt = jwtUtil.generateToken(user);
         return new AuthResponse(jwt);

@@ -3,6 +3,7 @@ package com.example.auth.controller;
 import com.example.auth.dto.ApiResponse;
 import com.example.auth.dto.ReviewRequest;
 import com.example.auth.dto.ReviewResponse;
+import com.example.auth.dto.ModerateReviewRequest;
 import com.example.auth.model.ReviewStatus;
 import com.example.auth.model.User;
 import com.example.auth.service.ReviewService;
@@ -40,11 +41,11 @@ public class ReviewController {
         })
         @PostMapping
         @PreAuthorize("hasAnyRole('CUSTOMER', 'STAFF', 'ADMIN')")
-        public ResponseEntity<ApiResponse<ReviewResponse>> submitReview(
+        public ResponseEntity<ApiResponse<ReviewResponse>> createReview(
                         @Parameter(description = "Authenticated user") @AuthenticationPrincipal User user,
                         @Parameter(description = "Review details") @Valid @RequestBody ReviewRequest request) {
                 return ResponseEntity.ok(ApiResponse.success(
-                                reviewService.submitReview(user.getId(), request)));
+                                reviewService.createReview(user.getId(), request)));
         }
 
         @Operation(summary = "Get play reviews", description = "Get all approved reviews for a play")
@@ -66,12 +67,12 @@ public class ReviewController {
                         @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Forbidden"),
                         @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Review not found")
         })
-        @PutMapping("/{id}/status")
+        @PutMapping("/{id}/moderate")
         @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
         public ResponseEntity<ApiResponse<ReviewResponse>> moderateReview(
                         @Parameter(description = "Review ID") @PathVariable Long id,
-                        @Parameter(description = "New review status") @RequestBody ReviewStatus status) {
+                        @Parameter(description = "Review moderation request") @RequestBody ModerateReviewRequest request) {
                 return ResponseEntity.ok(ApiResponse.success(
-                                reviewService.moderateReview(id, status)));
+                                reviewService.moderateReview(id, request.getStatus())));
         }
 }

@@ -40,8 +40,10 @@ public class Review {
     @Column(length = 1000)
     private String comment;
 
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private ReviewStatus status = ReviewStatus.PENDING;
 }

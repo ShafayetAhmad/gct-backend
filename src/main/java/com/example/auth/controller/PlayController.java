@@ -3,6 +3,7 @@ package com.example.auth.controller;
 import com.example.auth.dto.ApiResponse;
 import com.example.auth.dto.PlayRequest;
 import com.example.auth.dto.PlayResponse;
+import com.example.auth.model.User;
 import com.example.auth.service.PlayService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -11,6 +12,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,31 +25,39 @@ import java.util.List;
 public class PlayController {
     private final PlayService playService;
 
-    @Operation(summary = "Create new play", description = "Create a new play (Admin/Staff only)")
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
+    @Operation(summary = "Create a new play", description = "Only ADMIN and STAFF can create plays")
     public ResponseEntity<ApiResponse<PlayResponse>> createPlay(@Valid @RequestBody PlayRequest request) {
         return ResponseEntity.ok(ApiResponse.success(playService.createPlay(request)));
     }
 
-    @Operation(summary = "Get all plays", description = "Get list of all plays")
     @GetMapping
+    @Operation(summary = "Get all plays", description = "Anyone can view all plays")
     public ResponseEntity<ApiResponse<List<PlayResponse>>> getAllPlays() {
         return ResponseEntity.ok(ApiResponse.success(playService.getAllPlays()));
     }
 
-    @Operation(summary = "Get play by ID", description = "Get play details by ID")
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<PlayResponse>> getPlay(@PathVariable Long id) {
-        return ResponseEntity.ok(ApiResponse.success(playService.getPlay(id)));
+    @Operation(summary = "Get play by ID", description = "Anyone can view a specific play")
+    public ResponseEntity<ApiResponse<PlayResponse>> getPlayById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(playService.getPlayById(id)));
     }
 
-    @Operation(summary = "Update play", description = "Update play details (Admin/Staff only)")
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
+    @Operation(summary = "Update play details", description = "Only ADMIN and STAFF can update plays")
     public ResponseEntity<ApiResponse<PlayResponse>> updatePlay(
             @PathVariable Long id,
             @Valid @RequestBody PlayRequest request) {
         return ResponseEntity.ok(ApiResponse.success(playService.updatePlay(id, request)));
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Delete a play", description = "Only ADMIN can delete plays")
+    public ResponseEntity<ApiResponse<Void>> deletePlay(@PathVariable Long id) {
+        playService.deletePlay(id);
+        return ResponseEntity.ok(ApiResponse.success(null));
     }
 }

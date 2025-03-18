@@ -31,10 +31,6 @@ public class Play {
     @Column(nullable = false, length = 1000)
     private String description;
 
-    private String director;
-    private int durationMinutes;
-    private String genre;
-
     @OneToMany(mappedBy = "play", cascade = CascadeType.ALL)
     private List<Performance> performances = new ArrayList<>();
 

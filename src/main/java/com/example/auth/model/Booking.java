@@ -18,10 +18,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.EnumType;
 import lombok.Data;
+import lombok.Setter;
 
 @Entity
 @Table(name = "bookings")
 @Data
+@Setter
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

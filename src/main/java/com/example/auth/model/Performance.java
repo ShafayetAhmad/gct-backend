@@ -34,21 +34,31 @@ public class Performance {
     private Play play;
 
     @Column(nullable = false)
-    private String title;
-
-    @Column(nullable = false, length = 1000)
-    private String description;
-
-    @Column(nullable = false)
     private LocalDateTime dateTime;
 
     @Column(nullable = false)
     private BigDecimal basePrice;
 
+    @Column(nullable = false)
     private Integer availableSeats;
 
     @OneToMany(mappedBy = "performance", cascade = CascadeType.ALL)
     private List<Booking> bookings = new ArrayList<>();
 
-    private boolean isCancelled = false;
+    @Column(nullable = false)
+    private boolean cancelled = false;
+
+    public boolean isCancelled() {
+        return cancelled;
+    }
+
+    // Helper method to get play title
+    public String getTitle() {
+        return play != null ? play.getTitle() : null;
+    }
+
+    // Helper method to get play description
+    public String getDescription() {
+        return play != null ? play.getDescription() : null;
+    }
 }

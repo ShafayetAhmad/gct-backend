@@ -1,318 +1,539 @@
-# Greenwich Community Theatre API Documentation
+# Theatre Management System API Documentation
 
 ## Base URL
 
-`http://localhost:8080/api`
+```
+http://localhost:8080/api
+```
 
-## Authentication Endpoints
+## URL Conventions
 
-### Register User
+- All endpoints use plural nouns (e.g., `/performances`, `/bookings`, `/reviews`)
+- Resource IDs are specified in the URL path (e.g., `/performances/{id}`)
+- Nested resources use the parent resource's ID (e.g., `/reviews/play/{playId}`)
+- Query parameters are used for filtering and pagination
+- All paths are case-sensitive
+
+## Authentication
+
+All endpoints except login and register require JWT authentication. Include the token in the Authorization header:
+
+```
+Authorization: Bearer <jwt_token>
+```
+
+## Endpoints
+
+### Authentication
+
+#### Register User
 
 ```http
 POST /auth/register
 ```
 
-**Request Body:**
+Request Body:
 
 ```json
 {
-  "email": "string",
-  "password": "string",
-  "fullName": "string",
-  "role": "CUSTOMER" // Optional, defaults to CUSTOMER
+  "email": "john.doe@example.com",
+  "password": "securePassword123",
+  "fullName": "John Doe"
 }
 ```
 
-**Response:** `200 OK`
+Response:
 
 ```json
 {
   "status": 200,
+  "message": "User registered successfully",
   "data": {
-    "token": "string"
+    "id": 1,
+    "email": "john.doe@example.com",
+    "fullName": "John Doe",
+    "role": "CUSTOMER"
   }
 }
 ```
 
-### Login
+#### Login
 
 ```http
 POST /auth/login
 ```
 
-**Request Body:**
+Request Body:
 
 ```json
 {
-  "email": "string",
-  "password": "string"
+  "email": "john.doe@example.com",
+  "password": "securePassword123"
 }
 ```
 
-**Response:** `200 OK`
+Response:
 
 ```json
 {
   "status": 200,
+  "message": "Login successful",
   "data": {
-    "token": "string"
+    "token": "eyJhbGciOiJIUzI1NiJ9...",
+    "user": {
+      "id": 1,
+      "email": "john.doe@example.com",
+      "fullName": "John Doe",
+      "role": "CUSTOMER"
+    }
   }
 }
 ```
 
-## Performance Management
+### Plays
 
-### List All Performances
+#### Create Play
 
 ```http
-GET /performances
+POST /plays
 ```
 
-**Response:** `200 OK`
+Request Body:
+
+```json
+{
+  "title": "Hamlet",
+  "description": "A tragedy by William Shakespeare"
+}
+```
+
+Response:
 
 ```json
 {
   "status": 200,
+  "message": "Play created successfully",
+  "data": {
+    "id": 1,
+    "title": "Hamlet",
+    "description": "A tragedy by William Shakespeare"
+  }
+}
+```
+
+#### Get All Plays
+
+```http
+GET /plays
+```
+
+Response:
+
+```json
+{
+  "status": 200,
+  "message": "Plays retrieved successfully",
   "data": [
     {
-      "id": "long",
-      "title": "string",
-      "description": "string",
-      "dateTime": "datetime",
-      "basePrice": "decimal",
-      "availableSeats": "integer"
+      "id": 1,
+      "title": "Hamlet",
+      "description": "A tragedy by William Shakespeare"
+    },
+    {
+      "id": 2,
+      "title": "Romeo and Juliet",
+      "description": "A romantic tragedy by William Shakespeare"
     }
   ]
 }
 ```
 
-### Get Performance Details
+#### Get Play by ID
 
 ```http
-GET /performances/{id}
+GET /plays/{id}
 ```
 
-**Response:** `200 OK`
+Response:
 
 ```json
 {
   "status": 200,
+  "message": "Play retrieved successfully",
   "data": {
-    "id": "long",
-    "title": "string",
-    "description": "string",
-    "dateTime": "datetime",
-    "basePrice": "decimal",
-    "seatMap": {
-      "rows": "integer",
-      "seatsPerRow": "integer",
-      "availableSeats": [
-        {
-          "id": "long",
-          "row": "string",
-          "number": "integer",
-          "band": "string",
-          "status": "string"
-        }
-      ]
-    }
+    "id": 1,
+    "title": "Hamlet",
+    "description": "A tragedy by William Shakespeare"
   }
 }
 ```
 
-### Create Performance (Admin/Staff Only)
+### Performances
+
+#### Create Performance
 
 ```http
 POST /performances
 ```
 
-**Request Body:**
+Request Body:
 
 ```json
 {
-  "title": "string",
-  "description": "string",
-  "dateTime": "datetime",
-  "basePrice": "decimal"
+  "playId": 1,
+  "dateTime": "2024-04-15T19:00:00",
+  "basePrice": 50.0
 }
 ```
 
-## Booking Management
-
-### Create Booking
-
-```http
-POST /bookings
-```
-
-**Request Body:**
+Response:
 
 ```json
 {
-  "performanceId": "long",
-  "seats": [
+  "status": 200,
+  "message": "Performance created successfully",
+  "data": {
+    "id": 1,
+    "playTitle": "Hamlet",
+    "dateTime": "2024-04-15T19:00:00",
+    "basePrice": 50.0,
+    "availableSeats": 100
+  }
+}
+```
+
+#### Get All Performances
+
+```http
+GET /performances
+```
+
+Response:
+
+```json
+{
+  "status": 200,
+  "message": "Performances retrieved successfully",
+  "data": [
     {
-      "seatId": "long",
-      "discountType": "string" // NONE, CHILD, SENIOR, SOCIAL_CLUB
+      "id": 1,
+      "playTitle": "Hamlet",
+      "dateTime": "2024-04-15T19:00:00",
+      "basePrice": 50.0,
+      "availableSeats": 100
     }
   ]
 }
 ```
 
-**Response:** `200 OK`
+#### Get Performance by ID
+
+```http
+GET /performances/{id}
+```
+
+Response:
 
 ```json
 {
   "status": 200,
+  "message": "Performance retrieved successfully",
   "data": {
-    "bookingId": "long",
-    "totalPrice": "decimal",
-    "seats": [
+    "id": 1,
+    "playTitle": "Hamlet",
+    "dateTime": "2024-04-15T19:00:00",
+    "basePrice": 50.0,
+    "availableSeats": 100,
+    "seatMap": [
       {
-        "seatLocation": "string",
-        "price": "decimal",
-        "discountType": "string"
+        "id": 1,
+        "rowNumber": "A",
+        "seatNumber": "1",
+        "band": "A",
+        "isBooked": false
       }
-    ],
-    "status": "string"
+    ]
   }
 }
 ```
 
-### Get User's Bookings
+### Bookings
+
+#### Create Booking
+
+```http
+POST /bookings
+```
+
+Request Body:
+
+```json
+{
+  "performanceId": 1,
+  "seats": [
+    {
+      "seatId": 1,
+      "discountType": "NONE"
+    }
+  ]
+}
+```
+
+Response:
+
+```json
+{
+  "status": 200,
+  "message": "Booking created successfully",
+  "data": {
+    "id": 1,
+    "performanceTitle": "Hamlet",
+    "performanceDateTime": "2024-04-15T19:00:00",
+    "seats": [
+      {
+        "seatLocation": "A1",
+        "band": "A",
+        "discountType": "NONE",
+        "price": 50.0
+      }
+    ],
+    "totalPrice": 50.0,
+    "status": "PENDING",
+    "bookingTime": "2024-03-20T10:00:00"
+  }
+}
+```
+
+#### Get User's Bookings
 
 ```http
 GET /bookings/me
 ```
 
-### Cancel Booking
+Response:
+
+```json
+{
+  "status": 200,
+  "message": "Bookings retrieved successfully",
+  "data": [
+    {
+      "id": 1,
+      "performanceTitle": "Hamlet",
+      "performanceDateTime": "2024-04-15T19:00:00",
+      "seats": [
+        {
+          "seatLocation": "A1",
+          "band": "A",
+          "discountType": "NONE",
+          "price": 50.0
+        }
+      ],
+      "totalPrice": 50.0,
+      "status": "CONFIRMED",
+      "bookingTime": "2024-03-20T10:00:00"
+    }
+  ]
+}
+```
+
+#### Cancel Booking
 
 ```http
 POST /bookings/{id}/cancel
 ```
 
-## Payment Processing
+Response:
 
-### Process Payment
+```json
+{
+  "status": 200,
+  "message": "Booking cancelled successfully",
+  "data": {
+    "id": 1,
+    "performanceTitle": "Hamlet",
+    "performanceDateTime": "2024-04-15T19:00:00",
+    "seats": [
+      {
+        "seatLocation": "A1",
+        "band": "A",
+        "discountType": "NONE",
+        "price": 50.0
+      }
+    ],
+    "totalPrice": 50.0,
+    "status": "CANCELLED",
+    "bookingTime": "2024-03-20T10:00:00"
+  }
+}
+```
+
+### Payments
+
+#### Process Payment
 
 ```http
 POST /payments/process
 ```
 
-**Request Body:**
+Request Body:
 
 ```json
 {
-  "bookingId": "long",
-  "cardNumber": "string",
-  "expiryDate": "string",
-  "cvv": "string"
+  "bookingId": 1,
+  "cardNumber": "4111111111111111",
+  "expiryDate": "12/25",
+  "cvv": "123"
 }
 ```
 
-**Response:** `200 OK`
+Response:
 
 ```json
 {
   "status": 200,
+  "message": "Payment processed successfully",
   "data": {
-    "transactionId": "string",
-    "status": "string",
-    "amount": "decimal"
+    "transactionId": "TXN123456",
+    "bookingId": 1,
+    "amount": 50.0,
+    "status": "SUCCESS",
+    "paymentTime": "2024-03-20T10:00:00"
   }
 }
 ```
 
-### Request Refund (Admin/Staff Only)
+#### Refund Payment
 
 ```http
 POST /payments/{bookingId}/refund
 ```
 
-## Review Management
+Response:
 
-### Submit Review
+```json
+{
+  "status": 200,
+  "message": "Payment refunded successfully",
+  "data": {
+    "transactionId": "TXN123456",
+    "bookingId": 1,
+    "amount": 50.0,
+    "status": "REFUNDED",
+    "paymentTime": "2024-03-20T10:00:00"
+  }
+}
+```
+
+### Reviews
+
+#### Create Review
 
 ```http
 POST /reviews
 ```
 
-**Request Body:**
+Request Body:
 
 ```json
 {
-  "playId": "long",
-  "rating": "integer",
-  "comment": "string"
+  "playId": 1,
+  "rating": 5,
+  "comment": "Excellent performance!"
 }
 ```
 
-### Get Play Reviews
+Response:
+
+```json
+{
+  "status": 200,
+  "message": "Review created successfully",
+  "data": {
+    "id": 1,
+    "userFullName": "John Doe",
+    "playTitle": "Hamlet",
+    "rating": 5,
+    "comment": "Excellent performance!",
+    "createdAt": "2024-03-20T10:00:00",
+    "status": "PENDING"
+  }
+}
+```
+
+#### Get Play Reviews
 
 ```http
 GET /reviews/play/{playId}
 ```
 
-### Moderate Review (Admin/Staff Only)
-
-```http
-PUT /reviews/{id}/status
-```
-
-**Request Body:**
+Response:
 
 ```json
 {
-  "status": "string" // APPROVED, REJECTED
+  "status": 200,
+  "message": "Reviews retrieved successfully",
+  "data": [
+    {
+      "id": 1,
+      "userFullName": "John Doe",
+      "playTitle": "Hamlet",
+      "rating": 5,
+      "comment": "Excellent performance!",
+      "createdAt": "2024-03-20T10:00:00",
+      "status": "APPROVED"
+    }
+  ]
 }
 ```
 
-## Theatre Package Management
+#### Moderate Review
 
-### Get User's Package Status
+```http
+PATCH /reviews/{id}/moderate
+```
+
+Query Parameters:
+
+- `status`: APPROVED, REJECTED
+
+Response:
+
+```json
+{
+  "status": 200,
+  "message": "Review moderated successfully",
+  "data": {
+    "id": 1,
+    "userFullName": "John Doe",
+    "playTitle": "Hamlet",
+    "rating": 5,
+    "comment": "Excellent performance!",
+    "createdAt": "2024-03-20T10:00:00",
+    "status": "APPROVED"
+  }
+}
+```
+
+### Theatre Packages
+
+#### Get User's Package
 
 ```http
 GET /packages/me
 ```
 
-**Response:** `200 OK`
+Response:
 
 ```json
 {
   "status": 200,
+  "message": "Package retrieved successfully",
   "data": {
-    "playsBooked": "integer",
-    "freeTicketsEarned": "integer",
-    "isActive": "boolean"
-  }
-}
-```
-
-## Seat Management
-
-### Get Seat Map
-
-```http
-GET /performances/{id}/seats
-```
-
-**Response:** `200 OK`
-
-```json
-{
-  "status": 200,
-  "data": {
-    "rows": "integer",
-    "seatsPerRow": "integer",
-    "seats": [
-      {
-        "id": "long",
-        "row": "string",
-        "number": "integer",
-        "band": "string", // A, B, C
-        "status": "string" // AVAILABLE, BOOKED
-      }
-    ]
+    "id": 1,
+    "playsBooked": 5,
+    "freeTicketsEarned": 1,
+    "isActive": true
   }
 }
 ```
@@ -324,10 +545,13 @@ GET /performances/{id}/seats
 ```json
 {
   "status": 400,
-  "message": "Invalid request parameters",
-  "errors": {
-    "field": "error message"
-  }
+  "message": "Invalid request data",
+  "errors": [
+    {
+      "field": "email",
+      "message": "Invalid email format"
+    }
+  ]
 }
 ```
 
@@ -336,7 +560,7 @@ GET /performances/{id}/seats
 ```json
 {
   "status": 401,
-  "message": "Authentication required"
+  "message": "Unauthorized access"
 }
 ```
 
@@ -367,20 +591,11 @@ GET /performances/{id}/seats
 }
 ```
 
-## Notes
+### 500 Internal Server Error
 
-1. All requests except `/auth/register` and `/auth/login` require JWT authentication
-2. JWT token should be included in the Authorization header: `Bearer <token>`
-3. Discount Types:
-   - NONE (no discount)
-   - CHILD (25% off)
-   - SENIOR (25% off)
-   - SOCIAL_CLUB (5% off, additional 5% for 20+ tickets)
-4. Additional discounts:
-   - Weekday Special: 10% off Monday-Thursday
-   - Last Hour: 10% off in the last hour before performance
-   - Theatre Package: Free ticket after booking 4 plays
-5. Seat Bands:
-   - Band A: Full price
-   - Band B: 80% of full price
-   - Band C: 60% of full price
+```json
+{
+  "status": 500,
+  "message": "Internal server error"
+}
+```

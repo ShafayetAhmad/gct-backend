@@ -23,10 +23,9 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.example.auth.dto.SeatBookingDto;
-import com.example.auth.dto.SeatSelectionRequest;
+import com.example.auth.dto.BookingRequest;
 import com.example.auth.dto.BookingResponse;
-import com.example.auth.dto.BookedSeatDto;
+import com.example.auth.dto.SeatBookingDto;
 import com.example.auth.model.DiscountType;
 import com.example.auth.service.BookingService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,7 +50,6 @@ class BookingControllerTest extends BaseControllerTest {
 
     @BeforeEach
     void setUp() {
-
         // Create a reusable mock response
         mockBookingResponse = BookingResponse.builder()
                 .id(1L)
@@ -67,7 +65,7 @@ class BookingControllerTest extends BaseControllerTest {
     @Test
     @WithMockUser(roles = "CUSTOMER")
     void createBooking_Success() throws Exception {
-        SeatSelectionRequest request = new SeatSelectionRequest();
+        BookingRequest request = new BookingRequest();
         request.setPerformanceId(1L);
         request.setSeats(List.of(new SeatBookingDto(1L, DiscountType.NONE)));
 
@@ -88,7 +86,7 @@ class BookingControllerTest extends BaseControllerTest {
         mockBookings.add(mockBookingResponse);
         when(bookingService.getUserBookings(anyLong())).thenReturn(mockBookings);
 
-        mockMvc.perform(get("/api/bookings/my-bookings")
+        mockMvc.perform(get("/api/bookings/me")
                 .header("Authorization", jwtToken))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value(200));

@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
+@Transactional
 public class PlayService {
     private final PlayRepository playRepository;
 
@@ -31,7 +31,7 @@ public class PlayService {
                 .collect(Collectors.toList());
     }
 
-    public PlayResponse getPlay(Long id) {
+    public PlayResponse getPlayById(Long id) {
         return mapToPlayResponse(findPlayById(id));
     }
 
@@ -42,9 +42,14 @@ public class PlayService {
         return mapToPlayResponse(playRepository.save(play));
     }
 
+    public void deletePlay(Long id) {
+        Play play = findPlayById(id);
+        playRepository.delete(play);
+    }
+
     private Play findPlayById(Long id) {
         return playRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Play not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Play not found with id: " + id));
     }
 
     private PlayResponse mapToPlayResponse(Play play) {
@@ -54,4 +59,4 @@ public class PlayService {
                 .description(play.getDescription())
                 .build();
     }
-} 
+}

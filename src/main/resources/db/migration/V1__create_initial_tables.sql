@@ -1,11 +1,12 @@
 -- Create users table
 CREATE TABLE users (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     full_name VARCHAR(255) NOT NULL,
-    role VARCHAR(50) NOT NULL
+    role VARCHAR(50) NOT NULL DEFAULT 'CUSTOMER'
 );
+
 
 -- Create plays table
 CREATE TABLE plays (
@@ -20,8 +21,8 @@ CREATE TABLE performances (
     play_id BIGINT NOT NULL,
     date_time DATETIME NOT NULL,
     base_price DECIMAL(10,2) NOT NULL,
-    available_seats INT NOT NULL,
-    is_cancelled BOOLEAN DEFAULT FALSE,
+    available_seats INT NOT NULL DEFAULT 100,
+    cancelled BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (play_id) REFERENCES plays(id)
 );
 
@@ -29,10 +30,10 @@ CREATE TABLE performances (
 CREATE TABLE seats (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     performance_id BIGINT NOT NULL,
-    row_number INT NOT NULL,
+    row_number VARCHAR(10) NOT NULL,
     seat_number INT NOT NULL,
-    band VARCHAR(1) NOT NULL,
-    is_booked BOOLEAN DEFAULT FALSE,
+    band VARCHAR(10) NOT NULL,
+    is_booked BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (performance_id) REFERENCES performances(id)
 );
 
@@ -40,9 +41,9 @@ CREATE TABLE seats (
 CREATE TABLE theatre_packages (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NULL,
-    plays_booked INT DEFAULT 0,
-    free_tickets_earned INT DEFAULT 0,
-    is_active BOOLEAN DEFAULT TRUE,
+    plays_booked INT NOT NULL DEFAULT 0,
+    free_tickets_earned INT NOT NULL DEFAULT 0,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
@@ -53,7 +54,7 @@ CREATE TABLE bookings (
     performance_id BIGINT NOT NULL,
     total_price DECIMAL(10,2) NOT NULL,
     booking_time DATETIME NOT NULL,
-    status VARCHAR(20) NOT NULL,
+    status VARCHAR(20) NOT NULL DEFAULT 'PENDING',
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (performance_id) REFERENCES performances(id)
 );
@@ -64,7 +65,7 @@ CREATE TABLE booked_seats (
     booking_id BIGINT NOT NULL,
     seat_id BIGINT NOT NULL,
     price DECIMAL(10,2) NOT NULL,
-    discount_type VARCHAR(20),
+    discount_type VARCHAR(20) NOT NULL DEFAULT 'NONE',
     FOREIGN KEY (booking_id) REFERENCES bookings(id),
     FOREIGN KEY (seat_id) REFERENCES seats(id)
 );
@@ -77,7 +78,7 @@ CREATE TABLE reviews (
     rating INT NOT NULL,
     comment TEXT,
     created_at DATETIME NOT NULL,
-    status VARCHAR(20) NOT NULL,
+    status VARCHAR(20) NOT NULL DEFAULT 'PENDING',
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (play_id) REFERENCES plays(id)
 );
@@ -89,6 +90,6 @@ CREATE TABLE payments (
     transaction_id VARCHAR(255) NOT NULL,
     amount DECIMAL(10,2) NOT NULL,
     payment_time DATETIME NOT NULL,
-    status VARCHAR(20) NOT NULL,
+    status VARCHAR(20) NOT NULL DEFAULT 'PENDING',
     FOREIGN KEY (booking_id) REFERENCES bookings(id)
 ); 

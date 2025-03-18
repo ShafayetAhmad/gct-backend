@@ -38,5 +38,6 @@ public class BookedSeat {
     private BigDecimal price;
 
     @Enumerated(EnumType.STRING)
-    private DiscountType discountType;
+    @Column(nullable = false)
+    private DiscountType discountType = DiscountType.NONE;
 }

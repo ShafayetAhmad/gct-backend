@@ -9,11 +9,15 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.example.auth.dto.BookedSeatDto;
+import com.example.auth.dto.BookedSeatResponse;
+import com.example.auth.dto.BookingRequest;
 import com.example.auth.dto.BookingResponse;
 import com.example.auth.dto.SeatBookingDto;
 import com.example.auth.dto.SeatSelectionRequest;
 import com.example.auth.exception.BookingException;
 import com.example.auth.exception.ResourceNotFoundException;
+import com.example.auth.exception.UnauthorizedException;
+import com.example.auth.exception.ValidationException;
 import com.example.auth.model.*;
 import com.example.auth.repository.BookingRepository;
 import com.example.auth.repository.PerformanceRepository;
@@ -34,78 +38,59 @@ public class BookingService {
     private final UserRepository userRepository;
     private final DiscountService discountService;
     private final TheatrePackageRepository theatrePackageRepository;
+    private final TheatrePackageService packageService;
 
-    public BookingResponse createBooking(Long userId, SeatSelectionRequest request) {
-        Performance performance = performanceRepository.findById(request.getPerformanceId())
-                .orElseThrow(() -> new ResourceNotFoundException("Performance not found"));
-
+    public BookingResponse createBooking(Long userId, BookingRequest request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        validatePerformanceAvailability(performance);
+        Performance performance = performanceRepository.findById(request.getPerformanceId())
+                .orElseThrow(() -> new ResourceNotFoundException("Performance not found"));
 
+        // Validate seats and calculate total price
         List<BookedSeat> bookedSeats = new ArrayList<>();
         BigDecimal totalPrice = BigDecimal.ZERO;
 
-        // Check and update theatre package
-        TheatrePackage userPackage = theatrePackageRepository.findActivePackageByUserId(userId)
-                .orElseGet(() -> {
-                    TheatrePackage newPackage = new TheatrePackage();
-                    newPackage.setUser(user);
-                    return newPackage;
-                });
-
-        // Calculate total seats being booked
-        int totalSeats = request.getSeats().size();
-
-        for (SeatBookingDto seatDto : request.getSeats()) {
-            Seat seat = seatRepository.findById(seatDto.getSeatId())
+        for (SeatBookingDto seatRequest : request.getSeats()) {
+            Seat seat = seatRepository.findById(seatRequest.getSeatId())
                     .orElseThrow(() -> new ResourceNotFoundException("Seat not found"));
 
-            validateSeatAvailability(performance, seat);
+            if (seat.getIsBooked()) {
+                throw new ValidationException("Seat " + seat.getRow() + seat.getNumber() + " is already booked");
+            }
 
-            BigDecimal seatPrice = calculateSeatPrice(seat, seatDto.getDiscountType());
+            BigDecimal seatPrice = calculateSeatPrice(seat, performance, seatRequest.getDiscountType());
             totalPrice = totalPrice.add(seatPrice);
 
             BookedSeat bookedSeat = new BookedSeat();
             bookedSeat.setSeat(seat);
             bookedSeat.setPrice(seatPrice);
-            bookedSeat.setDiscountType(seatDto.getDiscountType());
+            bookedSeat.setDiscountType(seatRequest.getDiscountType());
             bookedSeats.add(bookedSeat);
+
+            seat.setIsBooked(true);
+            seatRepository.save(seat);
         }
 
-        // Apply package benefits
-        if (userPackage.getPlaysBooked() >= 4) {
-            // Apply free ticket
-            totalPrice = calculatePriceWithFreeTicket(totalPrice,
-                    bookedSeats.stream().map(BookedSeat::getPrice).collect(Collectors.toList()));
-            userPackage.setFreeTicketsEarned(userPackage.getFreeTicketsEarned() + 1);
-            userPackage.setPlaysBooked(0);
-        } else {
-            userPackage.setPlaysBooked(userPackage.getPlaysBooked() + 1);
+        // Apply package discount if applicable
+        if (packageService.isEligibleForFreeTicket(userId)) {
+            totalPrice = applyPackageDiscount(totalPrice, bookedSeats);
+            packageService.useFreeTicket(userId);
         }
 
-        // Apply discounts
-        BigDecimal finalDiscount = discountService.calculateDiscount(
-                performance,
-                request.getDiscountType(),
-                totalSeats);
-        totalPrice = totalPrice.multiply(finalDiscount);
-
-        theatrePackageRepository.save(userPackage);
-
+        // Create booking
         Booking booking = new Booking();
         booking.setUser(user);
         booking.setPerformance(performance);
         booking.setBookedSeats(bookedSeats);
         booking.setTotalPrice(totalPrice);
         booking.setBookingTime(LocalDateTime.now());
-        booking.setStatus(BookingStatus.CONFIRMED);
+        booking.setStatus(BookingStatus.PENDING);
 
         bookedSeats.forEach(bs -> bs.setBooking(booking));
 
         Booking savedBooking = bookingRepository.save(booking);
-        return createBookingResponse(savedBooking);
+        return mapToBookingResponse(savedBooking);
     }
 
     private void validatePerformanceAvailability(Performance performance) {
@@ -125,51 +110,75 @@ public class BookingService {
         }
     }
 
-    private BigDecimal calculateSeatPrice(Seat seat, DiscountType discountType) {
-        return seat.getBasePrice()
-                .multiply(BigDecimal.valueOf(seat.getBand().getPriceMultiplier()))
-                .multiply(BigDecimal.valueOf(discountType.getMultiplier()));
+    private BigDecimal calculateSeatPrice(Seat seat, Performance performance, DiscountType discountType) {
+        BigDecimal basePrice = performance.getBasePrice();
+        BigDecimal bandMultiplier = BigDecimal.valueOf(seat.getBand().getPriceMultiplier());
+        BigDecimal discountMultiplier = BigDecimal.valueOf(discountType.getMultiplier());
+
+        return basePrice.multiply(bandMultiplier).multiply(discountMultiplier);
     }
 
-    private BookingResponse createBookingResponse(Booking booking) {
-        return BookingResponse.builder()
-                .id(booking.getId())
-                .playTitle(booking.getPerformance().getPlay().getTitle())
-                .performanceDateTime(booking.getPerformance().getDateTime())
-                .seats(booking.getBookedSeats().stream()
-                        .map(this::createBookedSeatDto)
-                        .collect(Collectors.toList()))
-                .totalPrice(booking.getTotalPrice())
-                .status(booking.getStatus().name())
-                .bookingTime(booking.getBookingTime())
-                .build();
+    private BigDecimal applyPackageDiscount(BigDecimal totalPrice, List<BookedSeat> bookedSeats) {
+        // Apply the highest priced seat as free
+        return bookedSeats.stream()
+                .map(BookedSeat::getPrice)
+                .max(BigDecimal::compareTo)
+                .map(freeAmount -> totalPrice.subtract(freeAmount))
+                .orElse(totalPrice);
     }
 
-    private BookedSeatDto createBookedSeatDto(BookedSeat bookedSeat) {
-        return BookedSeatDto.builder()
-                .seatLocation(bookedSeat.getSeat().getRow() + bookedSeat.getSeat().getNumber())
-                .price(bookedSeat.getPrice())
-                .discountType(bookedSeat.getDiscountType())
-                .build();
+    private BookingResponse mapToBookingResponse(Booking booking) {
+        BookingResponse response = new BookingResponse();
+        response.setBookingId(booking.getId());
+        response.setPerformanceId(booking.getPerformance().getId());
+        response.setPerformanceTitle(booking.getPerformance().getTitle());
+        response.setPerformanceDateTime(booking.getPerformance().getDateTime());
+        response.setTotalPrice(booking.getTotalPrice());
+        response.setStatus(booking.getStatus());
+        response.setBookingTime(booking.getBookingTime());
+
+        List<BookedSeatResponse> seatResponses = booking.getBookedSeats().stream()
+                .map(this::mapToBookedSeatResponse)
+                .collect(Collectors.toList());
+        response.setSeats(seatResponses);
+
+        return response;
+    }
+
+    private BookedSeatResponse mapToBookedSeatResponse(BookedSeat bookedSeat) {
+        BookedSeatResponse response = new BookedSeatResponse();
+        response.setSeatLocation(bookedSeat.getSeat().getRow() + bookedSeat.getSeat().getNumber());
+        response.setBand(bookedSeat.getSeat().getBand().name());
+        response.setDiscountType(bookedSeat.getDiscountType());
+        response.setPrice(bookedSeat.getPrice());
+        return response;
     }
 
     public List<BookingResponse> getUserBookings(Long userId) {
         return bookingRepository.findByUserId(userId).stream()
-                .map(this::createBookingResponse)
+                .map(this::mapToBookingResponse)
                 .collect(Collectors.toList());
     }
 
-    public BookingResponse cancelBooking(Long bookingId, User user) {
+    public BookingResponse cancelBooking(Long userId, Long bookingId) {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new ResourceNotFoundException("Booking not found"));
 
-        if (!booking.getUser().getId().equals(user.getId()) &&
-                !user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN") ||
-                        a.getAuthority().equals("ROLE_STAFF"))) {
-            throw new BookingException("Not authorized to cancel this booking");
+        if (!booking.getUser().getId().equals(userId)) {
+            throw new UnauthorizedException("Not authorized to cancel this booking");
+        }
+
+        if (booking.getStatus() != BookingStatus.PENDING &&
+                booking.getStatus() != BookingStatus.CONFIRMED) {
+            throw new ValidationException("Booking cannot be cancelled");
         }
 
         booking.setStatus(BookingStatus.CANCELLED);
-        return createBookingResponse(bookingRepository.save(booking));
+        booking.getBookedSeats().forEach(bs -> {
+            bs.getSeat().setIsBooked(false);
+            seatRepository.save(bs.getSeat());
+        });
+
+        return mapToBookingResponse(bookingRepository.save(booking));
     }
 }

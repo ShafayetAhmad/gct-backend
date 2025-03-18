@@ -1,15 +1,12 @@
 package com.example.auth.dto;
 
+import lombok.Data;
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class SeatSelectionRequest {
+    private Long seatId;
     private Long performanceId;
+    private String discountType;
     private List<SeatBookingDto> seats;
 }

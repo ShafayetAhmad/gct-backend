@@ -28,7 +28,7 @@ public class Play {
     @Column(nullable = false)
     private String title;
 
-    @Column(length = 1000)
+    @Column(nullable = false, length = 1000)
     private String description;
 
     private String director;
@@ -37,4 +37,7 @@ public class Play {
 
     @OneToMany(mappedBy = "play", cascade = CascadeType.ALL)
     private List<Performance> performances = new ArrayList<>();
+
+    @OneToMany(mappedBy = "play", cascade = CascadeType.ALL)
+    private List<Review> reviews = new ArrayList<>();
 }

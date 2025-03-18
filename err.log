@@ -1,0 +1,623 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------------< com.example:auth >--------------------------
+[INFO] Building auth 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.4.3:run (default-cli) > test-compile @ auth >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ auth ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 4 resources from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ auth ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 79 source files with javac [debug parameters release 17] to target/classes
+[INFO] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/dto/PaymentRequest.java: /home/sh/Downloads/auth_1/src/main/java/com/example/auth/dto/PaymentRequest.java uses or overrides a deprecated API.
+[INFO] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/dto/PaymentRequest.java: Recompile with -Xlint:deprecation for details.
+[INFO] -------------------------------------------------------------
+[WARNING] COMPILATION WARNING : 
+[INFO] -------------------------------------------------------------
+[WARNING] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/security/SecurityConfig.java:[32,17] csrf() in org.springframework.security.config.annotation.web.builders.HttpSecurity has been deprecated and marked for removal
+[WARNING] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/security/SecurityConfig.java:[33,17] authorizeHttpRequests() in org.springframework.security.config.annotation.web.builders.HttpSecurity has been deprecated and marked for removal
+[WARNING] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/security/SecurityConfig.java:[44,17] and() in org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer.AuthorizationManagerRequestMatcherRegistry has been deprecated and marked for removal
+[WARNING] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/security/SecurityConfig.java:[45,17] sessionManagement() in org.springframework.security.config.annotation.web.builders.HttpSecurity has been deprecated and marked for removal
+[WARNING] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/security/SecurityConfig.java:[47,17] and() in org.springframework.security.config.annotation.SecurityConfigurerAdapter has been deprecated and marked for removal
+[INFO] 5 warnings 
+[INFO] -------------------------------------------------------------
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[39,55] cannot find symbol
+  symbol:   class BookingRequest
+  location: class com.example.auth.service.BookingService
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[135,13] cannot find symbol
+  symbol:   class BookedSeatResponse
+  location: class com.example.auth.service.BookingService
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/PackageController.java:[4,28] cannot find symbol
+  symbol:   class PackageResponse
+  location: package com.example.auth.dto
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/PackageController.java:[6,32] cannot find symbol
+  symbol:   class PackageService
+  location: package com.example.auth.service
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/PackageController.java:[18,19] cannot find symbol
+  symbol:   class PackageService
+  location: class com.example.auth.controller.PackageController
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/PackageController.java:[21,39] cannot find symbol
+  symbol:   class PackageResponse
+  location: class com.example.auth.controller.PackageController
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/PaymentController.java:[33,27] reference to ApiResponse is ambiguous
+  both class com.example.auth.dto.ApiResponse in com.example.auth.dto and class io.swagger.v3.oas.annotations.responses.ApiResponse in io.swagger.v3.oas.annotations.responses match
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/PaymentController.java:[41,27] reference to ApiResponse is ambiguous
+  both class com.example.auth.dto.ApiResponse in com.example.auth.dto and class io.swagger.v3.oas.annotations.responses.ApiResponse in io.swagger.v3.oas.annotations.responses match
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/PaymentController.java:[10,1] a type with the same simple name is already defined by the single-type-import of com.example.auth.dto.ApiResponse
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/PaymentController.java:[27,14] reference to ApiResponse is ambiguous
+  both class com.example.auth.dto.ApiResponse in com.example.auth.dto and class io.swagger.v3.oas.annotations.responses.ApiResponse in io.swagger.v3.oas.annotations.responses match
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/PaymentController.java:[28,14] reference to ApiResponse is ambiguous
+  both class com.example.auth.dto.ApiResponse in com.example.auth.dto and class io.swagger.v3.oas.annotations.responses.ApiResponse in io.swagger.v3.oas.annotations.responses match
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/PaymentController.java:[29,14] reference to ApiResponse is ambiguous
+  both class com.example.auth.dto.ApiResponse in com.example.auth.dto and class io.swagger.v3.oas.annotations.responses.ApiResponse in io.swagger.v3.oas.annotations.responses match
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/AuthService.java:[26,69] cannot find symbol
+  symbol:   method getEmail()
+  location: variable request of type com.example.auth.dto.RegisterRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/AuthService.java:[29,47] cannot find symbol
+  symbol:   method getEmail()
+  location: variable request of type com.example.auth.dto.RegisterRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/AuthService.java:[30,70] cannot find symbol
+  symbol:   method getEmail()
+  location: variable request of type com.example.auth.dto.RegisterRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/AuthService.java:[38,30] cannot find symbol
+  symbol:   method getEmail()
+  location: variable request of type com.example.auth.dto.RegisterRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/AuthService.java:[39,56] cannot find symbol
+  symbol:   method getPassword()
+  location: variable request of type com.example.auth.dto.RegisterRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/AuthService.java:[40,33] cannot find symbol
+  symbol:   method getFullName()
+  location: variable request of type com.example.auth.dto.RegisterRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/AuthService.java:[43,67] cannot find symbol
+  symbol:   method getEmail()
+  location: variable user of type com.example.auth.model.User
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/AuthService.java:[46,16] constructor AuthResponse in class com.example.auth.dto.AuthResponse cannot be applied to given types;
+  required: no arguments
+  found:    java.lang.String
+  reason: actual and formal argument lists differ in length
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/AuthService.java:[51,64] cannot find symbol
+  symbol:   method getEmail()
+  location: variable request of type com.example.auth.dto.LoginRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/AuthService.java:[51,84] cannot find symbol
+  symbol:   method getPassword()
+  location: variable request of type com.example.auth.dto.LoginRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/AuthService.java:[53,54] cannot find symbol
+  symbol:   method getEmail()
+  location: variable request of type com.example.auth.dto.LoginRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/dto/ApiResponse.java:[25,27] cannot find symbol
+  symbol:   method <T>builder()
+  location: class com.example.auth.dto.ApiResponse
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/dto/ApiResponse.java:[33,27] cannot find symbol
+  symbol:   method <T>builder()
+  location: class com.example.auth.dto.ApiResponse
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/dto/ApiResponse.java:[40,27] cannot find symbol
+  symbol:   method <T>builder()
+  location: class com.example.auth.dto.ApiResponse
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/model/User.java:[18,8] com.example.auth.model.User is not abstract and does not override abstract method getPassword() in org.springframework.security.core.userdetails.UserDetails
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/BookingController.java:[26,66] cannot find symbol
+  symbol:   method getId()
+  location: variable user of type com.example.auth.model.User
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/BookingController.java:[33,68] cannot find symbol
+  symbol:   method getId()
+  location: variable user of type com.example.auth.model.User
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/BookingController.java:[41,66] cannot find symbol
+  symbol:   method getId()
+  location: variable user of type com.example.auth.model.User
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[51,60] cannot find symbol
+  symbol:   method getSeatId()
+  location: variable seatRequest of type com.example.auth.dto.SeatSelectionRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[54,21] cannot find symbol
+  symbol:   method getIsBooked()
+  location: variable seat of type com.example.auth.model.Seat
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[55,27] cannot find symbol
+  symbol:   class ValidationException
+  location: class com.example.auth.service.BookingService
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[55,61] cannot find symbol
+  symbol:   method getRow()
+  location: variable seat of type com.example.auth.model.Seat
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[55,77] cannot find symbol
+  symbol:   method getNumber()
+  location: variable seat of type com.example.auth.model.Seat
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[58,85] cannot find symbol
+  symbol:   method getDiscountType()
+  location: variable seatRequest of type com.example.auth.dto.SeatSelectionRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[62,23] cannot find symbol
+  symbol:   method setSeat(com.example.auth.model.Seat)
+  location: variable bookedSeat of type com.example.auth.model.BookedSeat
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[63,23] cannot find symbol
+  symbol:   method setPrice(java.math.BigDecimal)
+  location: variable bookedSeat of type com.example.auth.model.BookedSeat
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[64,51] cannot find symbol
+  symbol:   method getDiscountType()
+  location: variable seatRequest of type com.example.auth.dto.SeatSelectionRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[67,17] cannot find symbol
+  symbol:   method setIsBooked(boolean)
+  location: variable seat of type com.example.auth.model.Seat
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[73,26] cannot find symbol
+  symbol:   method applyPackageDiscount(java.math.BigDecimal,java.util.List<com.example.auth.model.BookedSeat>)
+  location: class com.example.auth.service.BookingService
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[79,16] cannot find symbol
+  symbol:   method setUser(com.example.auth.model.User)
+  location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[80,16] cannot find symbol
+  symbol:   method setPerformance(com.example.auth.model.Performance)
+  location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[81,16] cannot find symbol
+  symbol:   method setBookedSeats(java.util.List<com.example.auth.model.BookedSeat>)
+  location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[82,16] cannot find symbol
+  symbol:   method setTotalPrice(java.math.BigDecimal)
+  location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[83,16] cannot find symbol
+  symbol:   method setBookingTime(java.time.LocalDateTime)
+  location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[84,16] cannot find symbol
+  symbol:   method setStatus(com.example.auth.model.BookingStatus)
+  location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[86,37] cannot find symbol
+  symbol:   method setBooking(com.example.auth.model.Booking)
+  location: variable bs of type com.example.auth.model.BookedSeat
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[93,24] cannot find symbol
+  symbol:   method isCancelled()
+  location: variable performance of type com.example.auth.model.Performance
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[93,53] cannot find symbol
+  symbol:   method getDateTime()
+  location: variable performance of type com.example.auth.model.Performance
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[99,39] cannot find symbol
+  symbol:   method getBookings()
+  location: variable performance of type com.example.auth.model.Performance
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[110,43] cannot find symbol
+  symbol:   method getBasePrice()
+  location: variable performance of type com.example.auth.model.Performance
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[111,60] cannot find symbol
+  symbol:   method getBand()
+  location: variable seat of type com.example.auth.model.Seat
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[119,38] cannot find symbol
+  symbol:   method getId()
+  location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[120,42] cannot find symbol
+  symbol:   method getPerformance()
+  location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[121,45] cannot find symbol
+  symbol:   method getPerformance()
+  location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[122,48] cannot find symbol
+  symbol:   method getPerformance()
+  location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[123,39] cannot find symbol
+  symbol:   method getTotalPrice()
+  location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[124,35] cannot find symbol
+  symbol:   method getStatus()
+  location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[125,40] cannot find symbol
+  symbol:   method getBookingTime()
+  location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[127,14] cannot find symbol
+  symbol:   class BookedSeatResponse
+  location: class com.example.auth.service.BookingService
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[127,57] cannot find symbol
+  symbol:   method getBookedSeats()
+  location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[136,9] cannot find symbol
+  symbol:   class BookedSeatResponse
+  location: class com.example.auth.service.BookingService
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[136,43] cannot find symbol
+  symbol:   class BookedSeatResponse
+  location: class com.example.auth.service.BookingService
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[137,44] cannot find symbol
+  symbol:   method getSeat()
+  location: variable bookedSeat of type com.example.auth.model.BookedSeat
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[137,76] cannot find symbol
+  symbol:   method getSeat()
+  location: variable bookedSeat of type com.example.auth.model.BookedSeat
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[138,36] cannot find symbol
+  symbol:   method getSeat()
+  location: variable bookedSeat of type com.example.auth.model.BookedSeat
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[139,44] cannot find symbol
+  symbol:   method getDiscountType()
+  location: variable bookedSeat of type com.example.auth.model.BookedSeat
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[140,37] cannot find symbol
+  symbol:   method getPrice()
+  location: variable bookedSeat of type com.example.auth.model.BookedSeat
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[154,21] cannot find symbol
+  symbol:   method getUser()
+  location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[155,23] cannot find symbol
+  symbol:   class UnauthorizedException
+  location: class com.example.auth.service.BookingService
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[158,20] cannot find symbol
+  symbol:   method getStatus()
+  location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[159,24] cannot find symbol
+  symbol:   method getStatus()
+  location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[160,23] cannot find symbol
+  symbol:   class ValidationException
+  location: class com.example.auth.service.BookingService
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[163,16] cannot find symbol
+  symbol:   method setStatus(com.example.auth.model.BookingStatus)
+  location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[164,16] cannot find symbol
+  symbol:   method getBookedSeats()
+  location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/DiscountService.java:[23,36] cannot find symbol
+  symbol:   method getDateTime()
+  location: variable performance of type com.example.auth.model.Performance
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/DiscountService.java:[30,76] cannot find symbol
+  symbol:   method getDateTime()
+  location: variable performance of type com.example.auth.model.Performance
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/TheatrePackageService.java:[17,32] cannot find symbol
+  symbol:   method getPlaysBooked()
+  location: variable pkg of type com.example.auth.model.TheatrePackage
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/TheatrePackageService.java:[18,24] incompatible types: java.lang.Object cannot be converted to boolean
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/TheatrePackageService.java:[23,40] cannot find symbol
+  symbol:   class ValidationException
+  location: class com.example.auth.service.TheatrePackageService
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/TheatrePackageService.java:[25,12] cannot find symbol
+  symbol:   method setPlaysBooked(int)
+  location: variable pkg of type com.example.auth.model.TheatrePackage
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/TheatrePackageService.java:[26,37] cannot find symbol
+  symbol:   method getFreeTicketsEarned()
+  location: variable pkg of type com.example.auth.model.TheatrePackage
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/PackageController.java:[22,88] cannot find symbol
+  symbol:   method getId()
+  location: variable user of type com.example.auth.model.User
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/PaymentController.java:[35,34] reference to ApiResponse is ambiguous
+  both class com.example.auth.dto.ApiResponse in com.example.auth.dto and class io.swagger.v3.oas.annotations.responses.ApiResponse in io.swagger.v3.oas.annotations.responses match
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/PaymentController.java:[43,34] reference to ApiResponse is ambiguous
+  both class com.example.auth.dto.ApiResponse in com.example.auth.dto and class io.swagger.v3.oas.annotations.responses.ApiResponse in io.swagger.v3.oas.annotations.responses match
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[26,61] cannot find symbol
+  symbol:   method getBookingId()
+  location: variable request of type com.example.auth.dto.PaymentRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[30,56] cannot find symbol
+  symbol:   method getId()
+  location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[36,24] cannot find symbol
+  symbol:   method getCardNumber()
+  location: variable request of type com.example.auth.dto.PaymentRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[37,24] cannot find symbol
+  symbol:   method getExpiryDate()
+  location: variable request of type com.example.auth.dto.PaymentRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[38,24] cannot find symbol
+  symbol:   method getCvv()
+  location: variable request of type com.example.auth.dto.PaymentRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[39,24] cannot find symbol
+  symbol:   method getTotalPrice()
+  location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[42,16] cannot find symbol
+  symbol:   method setBooking(com.example.auth.model.Booking)
+  location: variable payment of type com.example.auth.model.Payment
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[43,34] cannot find symbol
+  symbol:   method getTotalPrice()
+  location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[44,16] cannot find symbol
+  symbol:   method setTransactionId(java.lang.String)
+  location: variable payment of type com.example.auth.model.Payment
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[45,16] cannot find symbol
+  symbol:   method setPaymentTime(java.time.LocalDateTime)
+  location: variable payment of type com.example.auth.model.Payment
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[48,20] cannot find symbol
+  symbol:   method setStatus(com.example.auth.model.PaymentStatus)
+  location: variable payment of type com.example.auth.model.Payment
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[49,20] cannot find symbol
+  symbol:   method setStatus(com.example.auth.model.BookingStatus)
+  location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[51,20] cannot find symbol
+  symbol:   method setStatus(com.example.auth.model.PaymentStatus)
+  location: variable payment of type com.example.auth.model.Payment
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[52,20] cannot find symbol
+  symbol:   method setStatus(com.example.auth.model.BookingStatus)
+  location: variable booking of type com.example.auth.model.Booking
+[INFO] 100 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.692 s
+[INFO] Finished at: 2025-03-18T01:46:36Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project auth: Compilation failure: Compilation failure: 
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[39,55] cannot find symbol
+[ERROR]   symbol:   class BookingRequest
+[ERROR]   location: class com.example.auth.service.BookingService
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[135,13] cannot find symbol
+[ERROR]   symbol:   class BookedSeatResponse
+[ERROR]   location: class com.example.auth.service.BookingService
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/PackageController.java:[4,28] cannot find symbol
+[ERROR]   symbol:   class PackageResponse
+[ERROR]   location: package com.example.auth.dto
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/PackageController.java:[6,32] cannot find symbol
+[ERROR]   symbol:   class PackageService
+[ERROR]   location: package com.example.auth.service
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/PackageController.java:[18,19] cannot find symbol
+[ERROR]   symbol:   class PackageService
+[ERROR]   location: class com.example.auth.controller.PackageController
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/PackageController.java:[21,39] cannot find symbol
+[ERROR]   symbol:   class PackageResponse
+[ERROR]   location: class com.example.auth.controller.PackageController
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/PaymentController.java:[33,27] reference to ApiResponse is ambiguous
+[ERROR]   both class com.example.auth.dto.ApiResponse in com.example.auth.dto and class io.swagger.v3.oas.annotations.responses.ApiResponse in io.swagger.v3.oas.annotations.responses match
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/PaymentController.java:[41,27] reference to ApiResponse is ambiguous
+[ERROR]   both class com.example.auth.dto.ApiResponse in com.example.auth.dto and class io.swagger.v3.oas.annotations.responses.ApiResponse in io.swagger.v3.oas.annotations.responses match
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/PaymentController.java:[10,1] a type with the same simple name is already defined by the single-type-import of com.example.auth.dto.ApiResponse
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/PaymentController.java:[27,14] reference to ApiResponse is ambiguous
+[ERROR]   both class com.example.auth.dto.ApiResponse in com.example.auth.dto and class io.swagger.v3.oas.annotations.responses.ApiResponse in io.swagger.v3.oas.annotations.responses match
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/PaymentController.java:[28,14] reference to ApiResponse is ambiguous
+[ERROR]   both class com.example.auth.dto.ApiResponse in com.example.auth.dto and class io.swagger.v3.oas.annotations.responses.ApiResponse in io.swagger.v3.oas.annotations.responses match
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/PaymentController.java:[29,14] reference to ApiResponse is ambiguous
+[ERROR]   both class com.example.auth.dto.ApiResponse in com.example.auth.dto and class io.swagger.v3.oas.annotations.responses.ApiResponse in io.swagger.v3.oas.annotations.responses match
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/AuthService.java:[26,69] cannot find symbol
+[ERROR]   symbol:   method getEmail()
+[ERROR]   location: variable request of type com.example.auth.dto.RegisterRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/AuthService.java:[29,47] cannot find symbol
+[ERROR]   symbol:   method getEmail()
+[ERROR]   location: variable request of type com.example.auth.dto.RegisterRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/AuthService.java:[30,70] cannot find symbol
+[ERROR]   symbol:   method getEmail()
+[ERROR]   location: variable request of type com.example.auth.dto.RegisterRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/AuthService.java:[38,30] cannot find symbol
+[ERROR]   symbol:   method getEmail()
+[ERROR]   location: variable request of type com.example.auth.dto.RegisterRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/AuthService.java:[39,56] cannot find symbol
+[ERROR]   symbol:   method getPassword()
+[ERROR]   location: variable request of type com.example.auth.dto.RegisterRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/AuthService.java:[40,33] cannot find symbol
+[ERROR]   symbol:   method getFullName()
+[ERROR]   location: variable request of type com.example.auth.dto.RegisterRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/AuthService.java:[43,67] cannot find symbol
+[ERROR]   symbol:   method getEmail()
+[ERROR]   location: variable user of type com.example.auth.model.User
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/AuthService.java:[46,16] constructor AuthResponse in class com.example.auth.dto.AuthResponse cannot be applied to given types;
+[ERROR]   required: no arguments
+[ERROR]   found:    java.lang.String
+[ERROR]   reason: actual and formal argument lists differ in length
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/AuthService.java:[51,64] cannot find symbol
+[ERROR]   symbol:   method getEmail()
+[ERROR]   location: variable request of type com.example.auth.dto.LoginRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/AuthService.java:[51,84] cannot find symbol
+[ERROR]   symbol:   method getPassword()
+[ERROR]   location: variable request of type com.example.auth.dto.LoginRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/AuthService.java:[53,54] cannot find symbol
+[ERROR]   symbol:   method getEmail()
+[ERROR]   location: variable request of type com.example.auth.dto.LoginRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/dto/ApiResponse.java:[25,27] cannot find symbol
+[ERROR]   symbol:   method <T>builder()
+[ERROR]   location: class com.example.auth.dto.ApiResponse
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/dto/ApiResponse.java:[33,27] cannot find symbol
+[ERROR]   symbol:   method <T>builder()
+[ERROR]   location: class com.example.auth.dto.ApiResponse
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/dto/ApiResponse.java:[40,27] cannot find symbol
+[ERROR]   symbol:   method <T>builder()
+[ERROR]   location: class com.example.auth.dto.ApiResponse
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/model/User.java:[18,8] com.example.auth.model.User is not abstract and does not override abstract method getPassword() in org.springframework.security.core.userdetails.UserDetails
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/BookingController.java:[26,66] cannot find symbol
+[ERROR]   symbol:   method getId()
+[ERROR]   location: variable user of type com.example.auth.model.User
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/BookingController.java:[33,68] cannot find symbol
+[ERROR]   symbol:   method getId()
+[ERROR]   location: variable user of type com.example.auth.model.User
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/BookingController.java:[41,66] cannot find symbol
+[ERROR]   symbol:   method getId()
+[ERROR]   location: variable user of type com.example.auth.model.User
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[51,60] cannot find symbol
+[ERROR]   symbol:   method getSeatId()
+[ERROR]   location: variable seatRequest of type com.example.auth.dto.SeatSelectionRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[54,21] cannot find symbol
+[ERROR]   symbol:   method getIsBooked()
+[ERROR]   location: variable seat of type com.example.auth.model.Seat
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[55,27] cannot find symbol
+[ERROR]   symbol:   class ValidationException
+[ERROR]   location: class com.example.auth.service.BookingService
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[55,61] cannot find symbol
+[ERROR]   symbol:   method getRow()
+[ERROR]   location: variable seat of type com.example.auth.model.Seat
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[55,77] cannot find symbol
+[ERROR]   symbol:   method getNumber()
+[ERROR]   location: variable seat of type com.example.auth.model.Seat
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[58,85] cannot find symbol
+[ERROR]   symbol:   method getDiscountType()
+[ERROR]   location: variable seatRequest of type com.example.auth.dto.SeatSelectionRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[62,23] cannot find symbol
+[ERROR]   symbol:   method setSeat(com.example.auth.model.Seat)
+[ERROR]   location: variable bookedSeat of type com.example.auth.model.BookedSeat
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[63,23] cannot find symbol
+[ERROR]   symbol:   method setPrice(java.math.BigDecimal)
+[ERROR]   location: variable bookedSeat of type com.example.auth.model.BookedSeat
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[64,51] cannot find symbol
+[ERROR]   symbol:   method getDiscountType()
+[ERROR]   location: variable seatRequest of type com.example.auth.dto.SeatSelectionRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[67,17] cannot find symbol
+[ERROR]   symbol:   method setIsBooked(boolean)
+[ERROR]   location: variable seat of type com.example.auth.model.Seat
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[73,26] cannot find symbol
+[ERROR]   symbol:   method applyPackageDiscount(java.math.BigDecimal,java.util.List<com.example.auth.model.BookedSeat>)
+[ERROR]   location: class com.example.auth.service.BookingService
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[79,16] cannot find symbol
+[ERROR]   symbol:   method setUser(com.example.auth.model.User)
+[ERROR]   location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[80,16] cannot find symbol
+[ERROR]   symbol:   method setPerformance(com.example.auth.model.Performance)
+[ERROR]   location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[81,16] cannot find symbol
+[ERROR]   symbol:   method setBookedSeats(java.util.List<com.example.auth.model.BookedSeat>)
+[ERROR]   location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[82,16] cannot find symbol
+[ERROR]   symbol:   method setTotalPrice(java.math.BigDecimal)
+[ERROR]   location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[83,16] cannot find symbol
+[ERROR]   symbol:   method setBookingTime(java.time.LocalDateTime)
+[ERROR]   location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[84,16] cannot find symbol
+[ERROR]   symbol:   method setStatus(com.example.auth.model.BookingStatus)
+[ERROR]   location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[86,37] cannot find symbol
+[ERROR]   symbol:   method setBooking(com.example.auth.model.Booking)
+[ERROR]   location: variable bs of type com.example.auth.model.BookedSeat
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[93,24] cannot find symbol
+[ERROR]   symbol:   method isCancelled()
+[ERROR]   location: variable performance of type com.example.auth.model.Performance
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[93,53] cannot find symbol
+[ERROR]   symbol:   method getDateTime()
+[ERROR]   location: variable performance of type com.example.auth.model.Performance
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[99,39] cannot find symbol
+[ERROR]   symbol:   method getBookings()
+[ERROR]   location: variable performance of type com.example.auth.model.Performance
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[110,43] cannot find symbol
+[ERROR]   symbol:   method getBasePrice()
+[ERROR]   location: variable performance of type com.example.auth.model.Performance
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[111,60] cannot find symbol
+[ERROR]   symbol:   method getBand()
+[ERROR]   location: variable seat of type com.example.auth.model.Seat
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[119,38] cannot find symbol
+[ERROR]   symbol:   method getId()
+[ERROR]   location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[120,42] cannot find symbol
+[ERROR]   symbol:   method getPerformance()
+[ERROR]   location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[121,45] cannot find symbol
+[ERROR]   symbol:   method getPerformance()
+[ERROR]   location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[122,48] cannot find symbol
+[ERROR]   symbol:   method getPerformance()
+[ERROR]   location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[123,39] cannot find symbol
+[ERROR]   symbol:   method getTotalPrice()
+[ERROR]   location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[124,35] cannot find symbol
+[ERROR]   symbol:   method getStatus()
+[ERROR]   location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[125,40] cannot find symbol
+[ERROR]   symbol:   method getBookingTime()
+[ERROR]   location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[127,14] cannot find symbol
+[ERROR]   symbol:   class BookedSeatResponse
+[ERROR]   location: class com.example.auth.service.BookingService
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[127,57] cannot find symbol
+[ERROR]   symbol:   method getBookedSeats()
+[ERROR]   location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[136,9] cannot find symbol
+[ERROR]   symbol:   class BookedSeatResponse
+[ERROR]   location: class com.example.auth.service.BookingService
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[136,43] cannot find symbol
+[ERROR]   symbol:   class BookedSeatResponse
+[ERROR]   location: class com.example.auth.service.BookingService
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[137,44] cannot find symbol
+[ERROR]   symbol:   method getSeat()
+[ERROR]   location: variable bookedSeat of type com.example.auth.model.BookedSeat
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[137,76] cannot find symbol
+[ERROR]   symbol:   method getSeat()
+[ERROR]   location: variable bookedSeat of type com.example.auth.model.BookedSeat
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[138,36] cannot find symbol
+[ERROR]   symbol:   method getSeat()
+[ERROR]   location: variable bookedSeat of type com.example.auth.model.BookedSeat
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[139,44] cannot find symbol
+[ERROR]   symbol:   method getDiscountType()
+[ERROR]   location: variable bookedSeat of type com.example.auth.model.BookedSeat
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[140,37] cannot find symbol
+[ERROR]   symbol:   method getPrice()
+[ERROR]   location: variable bookedSeat of type com.example.auth.model.BookedSeat
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[154,21] cannot find symbol
+[ERROR]   symbol:   method getUser()
+[ERROR]   location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[155,23] cannot find symbol
+[ERROR]   symbol:   class UnauthorizedException
+[ERROR]   location: class com.example.auth.service.BookingService
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[158,20] cannot find symbol
+[ERROR]   symbol:   method getStatus()
+[ERROR]   location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[159,24] cannot find symbol
+[ERROR]   symbol:   method getStatus()
+[ERROR]   location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[160,23] cannot find symbol
+[ERROR]   symbol:   class ValidationException
+[ERROR]   location: class com.example.auth.service.BookingService
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[163,16] cannot find symbol
+[ERROR]   symbol:   method setStatus(com.example.auth.model.BookingStatus)
+[ERROR]   location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/BookingService.java:[164,16] cannot find symbol
+[ERROR]   symbol:   method getBookedSeats()
+[ERROR]   location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/DiscountService.java:[23,36] cannot find symbol
+[ERROR]   symbol:   method getDateTime()
+[ERROR]   location: variable performance of type com.example.auth.model.Performance
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/DiscountService.java:[30,76] cannot find symbol
+[ERROR]   symbol:   method getDateTime()
+[ERROR]   location: variable performance of type com.example.auth.model.Performance
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/TheatrePackageService.java:[17,32] cannot find symbol
+[ERROR]   symbol:   method getPlaysBooked()
+[ERROR]   location: variable pkg of type com.example.auth.model.TheatrePackage
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/TheatrePackageService.java:[18,24] incompatible types: java.lang.Object cannot be converted to boolean
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/TheatrePackageService.java:[23,40] cannot find symbol
+[ERROR]   symbol:   class ValidationException
+[ERROR]   location: class com.example.auth.service.TheatrePackageService
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/TheatrePackageService.java:[25,12] cannot find symbol
+[ERROR]   symbol:   method setPlaysBooked(int)
+[ERROR]   location: variable pkg of type com.example.auth.model.TheatrePackage
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/TheatrePackageService.java:[26,37] cannot find symbol
+[ERROR]   symbol:   method getFreeTicketsEarned()
+[ERROR]   location: variable pkg of type com.example.auth.model.TheatrePackage
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/PackageController.java:[22,88] cannot find symbol
+[ERROR]   symbol:   method getId()
+[ERROR]   location: variable user of type com.example.auth.model.User
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/PaymentController.java:[35,34] reference to ApiResponse is ambiguous
+[ERROR]   both class com.example.auth.dto.ApiResponse in com.example.auth.dto and class io.swagger.v3.oas.annotations.responses.ApiResponse in io.swagger.v3.oas.annotations.responses match
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/controller/PaymentController.java:[43,34] reference to ApiResponse is ambiguous
+[ERROR]   both class com.example.auth.dto.ApiResponse in com.example.auth.dto and class io.swagger.v3.oas.annotations.responses.ApiResponse in io.swagger.v3.oas.annotations.responses match
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[26,61] cannot find symbol
+[ERROR]   symbol:   method getBookingId()
+[ERROR]   location: variable request of type com.example.auth.dto.PaymentRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[30,56] cannot find symbol
+[ERROR]   symbol:   method getId()
+[ERROR]   location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[36,24] cannot find symbol
+[ERROR]   symbol:   method getCardNumber()
+[ERROR]   location: variable request of type com.example.auth.dto.PaymentRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[37,24] cannot find symbol
+[ERROR]   symbol:   method getExpiryDate()
+[ERROR]   location: variable request of type com.example.auth.dto.PaymentRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[38,24] cannot find symbol
+[ERROR]   symbol:   method getCvv()
+[ERROR]   location: variable request of type com.example.auth.dto.PaymentRequest
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[39,24] cannot find symbol
+[ERROR]   symbol:   method getTotalPrice()
+[ERROR]   location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[42,16] cannot find symbol
+[ERROR]   symbol:   method setBooking(com.example.auth.model.Booking)
+[ERROR]   location: variable payment of type com.example.auth.model.Payment
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[43,34] cannot find symbol
+[ERROR]   symbol:   method getTotalPrice()
+[ERROR]   location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[44,16] cannot find symbol
+[ERROR]   symbol:   method setTransactionId(java.lang.String)
+[ERROR]   location: variable payment of type com.example.auth.model.Payment
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[45,16] cannot find symbol
+[ERROR]   symbol:   method setPaymentTime(java.time.LocalDateTime)
+[ERROR]   location: variable payment of type com.example.auth.model.Payment
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[48,20] cannot find symbol
+[ERROR]   symbol:   method setStatus(com.example.auth.model.PaymentStatus)
+[ERROR]   location: variable payment of type com.example.auth.model.Payment
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[49,20] cannot find symbol
+[ERROR]   symbol:   method setStatus(com.example.auth.model.BookingStatus)
+[ERROR]   location: variable booking of type com.example.auth.model.Booking
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[51,20] cannot find symbol
+[ERROR]   symbol:   method setStatus(com.example.auth.model.PaymentStatus)
+[ERROR]   location: variable payment of type com.example.auth.model.Payment
+[ERROR] /home/sh/Downloads/auth_1/src/main/java/com/example/auth/service/PaymentService.java:[52,20] cannot find symbol
+[ERROR]   symbol:   method setStatus(com.example.auth.model.BookingStatus)
+[ERROR]   location: variable booking of type com.example.auth.model.Booking
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

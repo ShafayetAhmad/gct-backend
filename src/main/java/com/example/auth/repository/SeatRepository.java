@@ -13,4 +13,8 @@ public interface SeatRepository extends JpaRepository<Seat, Long> {
     List<Seat> findByBand(SeatBand band);
 
     Optional<Seat> findByRowAndNumber(String row, Integer number);
+
+    List<Seat> findByPerformanceId(Long performanceId);
+
+    int countByPerformanceIdAndIsBookedFalse(Long performanceId);
 }

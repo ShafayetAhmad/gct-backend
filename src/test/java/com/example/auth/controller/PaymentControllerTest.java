@@ -18,9 +18,11 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.example.auth.dto.PaymentRequest;
-import com.example.auth.model.Payment;
+import com.example.auth.dto.PaymentResponse;
+import com.example.auth.model.PaymentStatus;
 import com.example.auth.service.PaymentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.math.BigDecimal;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -51,8 +53,14 @@ class PaymentControllerTest {
         request.setExpiryDate("12/25");
         request.setCvv("123");
 
-        Payment mockPayment = new Payment();
-        when(paymentService.processPayment(any())).thenReturn(mockPayment);
+        PaymentResponse mockResponse = PaymentResponse.builder()
+                .transactionId("test-transaction")
+                .bookingId(1L)
+                .amount(BigDecimal.valueOf(100.0))
+                .status(PaymentStatus.SUCCESS)
+                .build();
+
+        when(paymentService.processPayment(any())).thenReturn(mockResponse);
 
         mockMvc.perform(post("/api/payments/process")
                 .header("Authorization", jwtToken)
@@ -65,8 +73,14 @@ class PaymentControllerTest {
     @Test
     @WithMockUser(roles = "STAFF")
     void refundPayment_Success() throws Exception {
-        Payment mockPayment = new Payment();
-        when(paymentService.refundPayment(anyLong())).thenReturn(mockPayment);
+        PaymentResponse mockResponse = PaymentResponse.builder()
+                .transactionId("test-transaction")
+                .bookingId(1L)
+                .amount(BigDecimal.valueOf(100.0))
+                .status(PaymentStatus.REFUNDED)
+                .build();
+
+        when(paymentService.refundPayment(anyLong())).thenReturn(mockResponse);
 
         mockMvc.perform(post("/api/payments/1/refund")
                 .header("Authorization", jwtToken))

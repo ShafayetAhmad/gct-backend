@@ -14,10 +14,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ReviewResponse {
     private Long id;
-    private String userFullName;
+    private Long playId;
     private String playTitle;
+    private Long userId;
+    private String userFullName;
     private Integer rating;
     private String comment;
-    private LocalDateTime createdAt;
     private ReviewStatus status;
+    private LocalDateTime createdAt;
 }

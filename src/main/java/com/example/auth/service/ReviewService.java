@@ -1,42 +1,34 @@
 package com.example.auth.service;
 
-import com.example.auth.model.Review;
-import com.example.auth.model.ReviewStatus;
-import com.example.auth.model.User;
-import com.example.auth.model.Play;
-import com.example.auth.repository.ReviewRepository;
-import com.example.auth.repository.PlayRepository;
-import com.example.auth.repository.UserRepository;
-import com.example.auth.repository.BookingRepository;
 import com.example.auth.dto.ReviewRequest;
 import com.example.auth.dto.ReviewResponse;
 import com.example.auth.exception.ResourceNotFoundException;
-import com.example.auth.exception.ValidationException;
-
+import com.example.auth.model.*;
+import com.example.auth.repository.PlayRepository;
+import com.example.auth.repository.ReviewRepository;
+import com.example.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final PlayRepository playRepository;
     private final UserRepository userRepository;
-    private final BookingRepository bookingRepository;
 
-    public ReviewResponse createReview(Long userId, ReviewRequest request) {
+    public ReviewResponse submitReview(Long userId, ReviewRequest request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         Play play = playRepository.findById(request.getPlayId())
                 .orElseThrow(() -> new ResourceNotFoundException("Play not found"));
-
-        validateUserHasBooking(userId, play.getId());
 
         Review review = new Review();
         review.setUser(user);
@@ -44,46 +36,55 @@ public class ReviewService {
         review.setRating(request.getRating());
         review.setComment(request.getComment());
         review.setCreatedAt(LocalDateTime.now());
+        review.setStatus(ReviewStatus.PENDING);
 
-        Review savedReview = reviewRepository.save(review);
-        return createReviewResponse(savedReview);
-    }
-
-    private void validateUserHasBooking(Long userId, Long playId) {
-        boolean hasBooking = bookingRepository.findByUserId(userId).stream()
-                .anyMatch(booking -> booking.getPerformance().getPlay().getId().equals(playId));
-
-        if (!hasBooking) {
-            throw new ValidationException("You can only review plays you have booked");
-        }
-    }
-
-    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
-    public ReviewResponse moderateReview(Long reviewId, ReviewStatus newStatus) {
-        Review review = reviewRepository.findById(reviewId)
-                .orElseThrow(() -> new ResourceNotFoundException("Review not found"));
-
-        review.setStatus(newStatus);
-        Review savedReview = reviewRepository.save(review);
-        return createReviewResponse(savedReview);
+        return mapToReviewResponse(reviewRepository.save(review));
     }
 
     public List<ReviewResponse> getPlayReviews(Long playId) {
         return reviewRepository.findByPlayIdAndStatus(playId, ReviewStatus.APPROVED)
                 .stream()
-                .map(this::createReviewResponse)
+                .map(this::mapToReviewResponse)
                 .collect(Collectors.toList());
     }
 
-    private ReviewResponse createReviewResponse(Review review) {
+    public ReviewResponse moderateReview(Long reviewId, ReviewStatus status) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new ResourceNotFoundException("Review not found"));
+
+        review.setStatus(status);
+        return mapToReviewResponse(reviewRepository.save(review));
+    }
+
+    @Transactional
+    public ReviewResponse createReview(Long userId, ReviewRequest request) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        Review review = new Review();
+        review.setUser(user);
+        review.setPlay(playRepository.findById(request.getPlayId())
+                .orElseThrow(() -> new ResourceNotFoundException("Play not found")));
+        review.setRating(request.getRating());
+        review.setComment(request.getComment());
+        review.setStatus(ReviewStatus.PENDING);
+        review.setCreatedAt(LocalDateTime.now());
+
+        Review savedReview = reviewRepository.save(review);
+        return mapToReviewResponse(savedReview);
+    }
+
+    private ReviewResponse mapToReviewResponse(Review review) {
         return ReviewResponse.builder()
                 .id(review.getId())
-                .userFullName(review.getUser().getFullName())
+                .playId(review.getPlay().getId())
                 .playTitle(review.getPlay().getTitle())
+                .userId(review.getUser().getId())
+                .userFullName(review.getUser().getFullName())
                 .rating(review.getRating())
                 .comment(review.getComment())
-                .createdAt(review.getCreatedAt())
                 .status(review.getStatus())
+                .createdAt(review.getCreatedAt())
                 .build();
     }
 }

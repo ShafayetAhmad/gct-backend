@@ -31,6 +31,7 @@ import com.example.auth.model.DiscountType;
 import com.example.auth.service.BookingService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.auth.BaseControllerTest;
+import com.example.auth.model.BookingStatus;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -51,15 +52,14 @@ class BookingControllerTest extends BaseControllerTest {
     @BeforeEach
     void setUp() {
 
-        
         // Create a reusable mock response
         mockBookingResponse = BookingResponse.builder()
                 .id(1L)
-                .playTitle("Hamlet")
+                .performanceTitle("Hamlet")
                 .performanceDateTime(LocalDateTime.now())
                 .seats(new ArrayList<>())
                 .totalPrice(BigDecimal.valueOf(100))
-                .status("CONFIRMED")
+                .status(BookingStatus.CONFIRMED)
                 .bookingTime(LocalDateTime.now())
                 .build();
     }
@@ -99,11 +99,11 @@ class BookingControllerTest extends BaseControllerTest {
     void cancelBooking_Success() throws Exception {
         BookingResponse cancelledBooking = BookingResponse.builder()
                 .id(1L)
-                .playTitle("Hamlet")
+                .performanceTitle("Hamlet")
                 .performanceDateTime(LocalDateTime.now())
                 .seats(new ArrayList<>())
                 .totalPrice(BigDecimal.valueOf(100))
-                .status("CANCELLED")
+                .status(BookingStatus.CANCELLED)
                 .bookingTime(LocalDateTime.now())
                 .build();
 

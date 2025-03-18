@@ -14,15 +14,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.Column;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "bookings")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +38,13 @@ public class Booking {
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
     private List<BookedSeat> bookedSeats = new ArrayList<>();
 
-    private LocalDateTime bookingTime;
+    @Column(nullable = false)
     private BigDecimal totalPrice;
-    private BookingStatus status = BookingStatus.CONFIRMED;
+
+    @Column(nullable = false)
+    private LocalDateTime bookingTime;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private BookingStatus status = BookingStatus.PENDING;
 }

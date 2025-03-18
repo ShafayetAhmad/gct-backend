@@ -17,10 +17,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class BookingResponse {
     private Long id;
-    private String playTitle;
+    private Long bookingId;
+    private Long performanceId;
+    private String performanceTitle;
     private LocalDateTime performanceDateTime;
-    private List<BookedSeatDto> seats;
+    private List<BookedSeatResponse> seats;
     private BigDecimal totalPrice;
-    private String status;
+    private BookingStatus status;
     private LocalDateTime bookingTime;
 }

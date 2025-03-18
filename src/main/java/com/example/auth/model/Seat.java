@@ -10,6 +10,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,8 +33,13 @@ public class Seat {
     private Integer number;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private SeatBand band;
 
+    @ManyToOne
+    @JoinColumn(name = "performance_id")
+    private Performance performance;
+
     @Column(nullable = false)
-    private BigDecimal basePrice;
+    private Boolean isBooked = false;
 }

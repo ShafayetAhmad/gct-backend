@@ -129,6 +129,7 @@ public class BookingService {
 
     private BookingResponse mapToBookingResponse(Booking booking) {
         BookingResponse response = new BookingResponse();
+        response.setId(booking.getId());
         response.setBookingId(booking.getId());
         response.setPerformanceId(booking.getPerformance().getId());
         response.setPerformanceTitle(booking.getPerformance().getTitle());

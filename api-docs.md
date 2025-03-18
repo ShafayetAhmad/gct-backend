@@ -272,11 +272,11 @@ Request Body:
 
 ```json
 {
-  "performanceId": 1,
+  "performanceId": "4",
   "seats": [
     {
-      "seatId": 1,
-      "discountType": "NONE"
+      "seatId": "20",
+      "discountType": "SENIOR"
     }
   ]
 }

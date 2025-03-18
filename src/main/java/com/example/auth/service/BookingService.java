@@ -19,6 +19,7 @@ import com.example.auth.repository.BookingRepository;
 import com.example.auth.repository.PerformanceRepository;
 import com.example.auth.repository.SeatRepository;
 import com.example.auth.repository.UserRepository;
+import com.example.auth.repository.TheatrePackageRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,8 @@ public class BookingService {
     private final PerformanceRepository performanceRepository;
     private final SeatRepository seatRepository;
     private final UserRepository userRepository;
+    private final DiscountService discountService;
+    private final TheatrePackageRepository theatrePackageRepository;
 
     public BookingResponse createBooking(Long userId, SeatSelectionRequest request) {
         Performance performance = performanceRepository.findById(request.getPerformanceId())
@@ -43,6 +46,17 @@ public class BookingService {
 
         List<BookedSeat> bookedSeats = new ArrayList<>();
         BigDecimal totalPrice = BigDecimal.ZERO;
+
+        // Check and update theatre package
+        TheatrePackage userPackage = theatrePackageRepository.findActivePackageByUserId(userId)
+                .orElseGet(() -> {
+                    TheatrePackage newPackage = new TheatrePackage();
+                    newPackage.setUser(user);
+                    return newPackage;
+                });
+
+        // Calculate total seats being booked
+        int totalSeats = request.getSeats().size();
 
         for (SeatBookingDto seatDto : request.getSeats()) {
             Seat seat = seatRepository.findById(seatDto.getSeatId())
@@ -59,6 +73,26 @@ public class BookingService {
             bookedSeat.setDiscountType(seatDto.getDiscountType());
             bookedSeats.add(bookedSeat);
         }
+
+        // Apply package benefits
+        if (userPackage.getPlaysBooked() >= 4) {
+            // Apply free ticket
+            totalPrice = calculatePriceWithFreeTicket(totalPrice,
+                    bookedSeats.stream().map(BookedSeat::getPrice).collect(Collectors.toList()));
+            userPackage.setFreeTicketsEarned(userPackage.getFreeTicketsEarned() + 1);
+            userPackage.setPlaysBooked(0);
+        } else {
+            userPackage.setPlaysBooked(userPackage.getPlaysBooked() + 1);
+        }
+
+        // Apply discounts
+        BigDecimal finalDiscount = discountService.calculateDiscount(
+                performance,
+                request.getDiscountType(),
+                totalSeats);
+        totalPrice = totalPrice.multiply(finalDiscount);
+
+        theatrePackageRepository.save(userPackage);
 
         Booking booking = new Booking();
         booking.setUser(user);

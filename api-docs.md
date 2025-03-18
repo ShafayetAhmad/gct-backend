@@ -1,331 +1,333 @@
-# Theatre Booking System API Documentation
+# Greenwich Community Theatre API Documentation
 
 ## Base URL
 
-`http://localhost:8080`
+`http://localhost:8080/api`
 
-## Authentication
+## Authentication Endpoints
 
-The API uses JWT (JSON Web Token) for authentication. Include the JWT token in the Authorization header:
+### Register User
 
+```http
+POST /auth/register
 ```
-Authorization: Bearer <your_jwt_token>
+
+**Request Body:**
+
+```json
+{
+  "email": "string",
+  "password": "string",
+  "fullName": "string",
+  "role": "CUSTOMER" // Optional, defaults to CUSTOMER
+}
 ```
 
-## API Endpoints
+**Response:** `200 OK`
 
-### Authentication
-
-#### Register User
-
-- **URL**: `/api/auth/register`
-- **Method**: `POST`
-- **Auth Required**: No
-- **Description**: Register a new user in the system
-- **Request Body**:
-  ```json
-  {
-    "email": "string",
-    "password": "string",
-    "fullName": "string",
-    "phoneNumber": "string"
+```json
+{
+  "status": 200,
+  "data": {
+    "token": "string"
   }
-  ```
-- **Success Response**: 200 OK
-  ```json
-  {
-    "status": 200,
-    "message": "Success",
-    "data": {
-      "token": "string",
-      "user": {
-        "id": "number",
-        "email": "string",
-        "fullName": "string",
-        "role": "string"
-      }
+}
+```
+
+### Login
+
+```http
+POST /auth/login
+```
+
+**Request Body:**
+
+```json
+{
+  "email": "string",
+  "password": "string"
+}
+```
+
+**Response:** `200 OK`
+
+```json
+{
+  "status": 200,
+  "data": {
+    "token": "string"
+  }
+}
+```
+
+## Performance Management
+
+### List All Performances
+
+```http
+GET /performances
+```
+
+**Response:** `200 OK`
+
+```json
+{
+  "status": 200,
+  "data": [
+    {
+      "id": "long",
+      "title": "string",
+      "description": "string",
+      "dateTime": "datetime",
+      "basePrice": "decimal",
+      "availableSeats": "integer"
+    }
+  ]
+}
+```
+
+### Get Performance Details
+
+```http
+GET /performances/{id}
+```
+
+**Response:** `200 OK`
+
+```json
+{
+  "status": 200,
+  "data": {
+    "id": "long",
+    "title": "string",
+    "description": "string",
+    "dateTime": "datetime",
+    "basePrice": "decimal",
+    "seatMap": {
+      "rows": "integer",
+      "seatsPerRow": "integer",
+      "availableSeats": [
+        {
+          "id": "long",
+          "row": "string",
+          "number": "integer",
+          "band": "string",
+          "status": "string"
+        }
+      ]
     }
   }
-  ```
+}
+```
 
-#### Login
+### Create Performance (Admin/Staff Only)
 
-- **URL**: `/api/auth/login`
-- **Method**: `POST`
-- **Auth Required**: No
-- **Description**: Authenticate user and get JWT token
-- **Request Body**:
-  ```json
-  {
-    "email": "string",
-    "password": "string"
-  }
-  ```
-- **Success Response**: 200 OK
-  ```json
-  {
-    "status": 200,
-    "message": "Success",
-    "data": {
-      "token": "string",
-      "user": {
-        "id": "number",
-        "email": "string",
-        "fullName": "string",
-        "role": "string"
-      }
+```http
+POST /performances
+```
+
+**Request Body:**
+
+```json
+{
+  "title": "string",
+  "description": "string",
+  "dateTime": "datetime",
+  "basePrice": "decimal"
+}
+```
+
+## Booking Management
+
+### Create Booking
+
+```http
+POST /bookings
+```
+
+**Request Body:**
+
+```json
+{
+  "performanceId": "long",
+  "seats": [
+    {
+      "seatId": "long",
+      "discountType": "string" // NONE, CHILD, SENIOR, SOCIAL_CLUB
     }
-  }
-  ```
+  ]
+}
+```
 
-### Bookings
+**Response:** `200 OK`
 
-#### Create Booking
-
-- **URL**: `/api/bookings`
-- **Method**: `POST`
-- **Auth Required**: Yes
-- **Roles**: CUSTOMER, STAFF, ADMIN
-- **Description**: Create a new booking for a performance
-- **Request Body**:
-  ```json
-  {
-    "performanceId": "number",
+```json
+{
+  "status": 200,
+  "data": {
+    "bookingId": "long",
+    "totalPrice": "decimal",
     "seats": [
       {
-        "seatId": "number",
-        "discountType": "NONE|STUDENT|SENIOR|CHILD"
+        "seatLocation": "string",
+        "price": "decimal",
+        "discountType": "string"
       }
-    ]
+    ],
+    "status": "string"
   }
-  ```
-- **Success Response**: 200 OK
-  ```json
-  {
-    "status": 200,
-    "message": "Success",
-    "data": {
-      "id": "number",
-      "performanceDetails": {
-        "playTitle": "string",
-        "dateTime": "string"
-      },
-      "bookedSeats": [
-        {
-          "seatLocation": "string",
-          "price": "number",
-          "discountType": "string"
-        }
-      ],
-      "totalPrice": "number",
-      "status": "string",
-      "bookingTime": "string"
-    }
+}
+```
+
+### Get User's Bookings
+
+```http
+GET /bookings/me
+```
+
+### Cancel Booking
+
+```http
+POST /bookings/{id}/cancel
+```
+
+## Payment Processing
+
+### Process Payment
+
+```http
+POST /payments/process
+```
+
+**Request Body:**
+
+```json
+{
+  "bookingId": "long",
+  "cardNumber": "string",
+  "expiryDate": "string",
+  "cvv": "string"
+}
+```
+
+**Response:** `200 OK`
+
+```json
+{
+  "status": 200,
+  "data": {
+    "transactionId": "string",
+    "status": "string",
+    "amount": "decimal"
   }
-  ```
+}
+```
 
-#### Get User's Bookings
+### Request Refund (Admin/Staff Only)
 
-- **URL**: `/api/bookings/my-bookings`
-- **Method**: `GET`
-- **Auth Required**: Yes
-- **Roles**: CUSTOMER, STAFF, ADMIN
-- **Description**: Get all bookings for the authenticated user
-- **Success Response**: 200 OK
-  ```json
-  {
-    "status": 200,
-    "message": "Success",
-    "data": [
+```http
+POST /payments/{bookingId}/refund
+```
+
+## Review Management
+
+### Submit Review
+
+```http
+POST /reviews
+```
+
+**Request Body:**
+
+```json
+{
+  "playId": "long",
+  "rating": "integer",
+  "comment": "string"
+}
+```
+
+### Get Play Reviews
+
+```http
+GET /reviews/play/{playId}
+```
+
+### Moderate Review (Admin/Staff Only)
+
+```http
+PUT /reviews/{id}/status
+```
+
+**Request Body:**
+
+```json
+{
+  "status": "string" // APPROVED, REJECTED
+}
+```
+
+## Theatre Package Management
+
+### Get User's Package Status
+
+```http
+GET /packages/me
+```
+
+**Response:** `200 OK`
+
+```json
+{
+  "status": 200,
+  "data": {
+    "playsBooked": "integer",
+    "freeTicketsEarned": "integer",
+    "isActive": "boolean"
+  }
+}
+```
+
+## Seat Management
+
+### Get Seat Map
+
+```http
+GET /performances/{id}/seats
+```
+
+**Response:** `200 OK`
+
+```json
+{
+  "status": 200,
+  "data": {
+    "rows": "integer",
+    "seatsPerRow": "integer",
+    "seats": [
       {
-        "id": "number",
-        "performanceDetails": {
-          "playTitle": "string",
-          "dateTime": "string"
-        },
-        "bookedSeats": [],
-        "totalPrice": "number",
-        "status": "string",
-        "bookingTime": "string"
+        "id": "long",
+        "row": "string",
+        "number": "integer",
+        "band": "string", // A, B, C
+        "status": "string" // AVAILABLE, BOOKED
       }
     ]
   }
-  ```
-
-#### Cancel Booking
-
-- **URL**: `/api/bookings/{bookingId}/cancel`
-- **Method**: `POST`
-- **Auth Required**: Yes
-- **Roles**: CUSTOMER, STAFF, ADMIN
-- **Description**: Cancel an existing booking
-- **Path Parameters**: bookingId (number)
-- **Success Response**: 200 OK
-  ```json
-  {
-    "status": 200,
-    "message": "Success",
-    "data": {
-      "id": "number",
-      "status": "CANCELLED",
-      "bookingTime": "string"
-    }
-  }
-  ```
-
-### Payments
-
-#### Process Payment
-
-- **URL**: `/api/payments/process`
-- **Method**: `POST`
-- **Auth Required**: Yes
-- **Roles**: CUSTOMER, STAFF, ADMIN
-- **Description**: Process payment for a booking
-- **Request Body**:
-  ```json
-  {
-    "bookingId": "number",
-    "cardNumber": "string",
-    "expiryDate": "string",
-    "cvv": "string"
-  }
-  ```
-- **Success Response**: 200 OK
-  ```json
-  {
-    "status": 200,
-    "message": "Success",
-    "data": {
-      "id": "number",
-      "transactionId": "string",
-      "amount": "number",
-      "status": "COMPLETED",
-      "paymentTime": "string"
-    }
-  }
-  ```
-
-#### Refund Payment
-
-- **URL**: `/api/payments/{bookingId}/refund`
-- **Method**: `POST`
-- **Auth Required**: Yes
-- **Roles**: STAFF, ADMIN
-- **Description**: Refund payment for a booking
-- **Path Parameters**: bookingId (number)
-- **Success Response**: 200 OK
-  ```json
-  {
-    "status": 200,
-    "message": "Success",
-    "data": {
-      "id": "number",
-      "transactionId": "string",
-      "amount": "number",
-      "status": "REFUNDED",
-      "paymentTime": "string"
-    }
-  }
-  ```
-
-### Reviews
-
-#### Create Review
-
-- **URL**: `/api/reviews`
-- **Method**: `POST`
-- **Auth Required**: Yes
-- **Roles**: CUSTOMER, STAFF, ADMIN
-- **Description**: Create a review for a play
-- **Request Body**:
-  ```json
-  {
-    "playId": "number",
-    "rating": "number (1-5)",
-    "comment": "string"
-  }
-  ```
-- **Success Response**: 200 OK
-  ```json
-  {
-    "status": 200,
-    "message": "Success",
-    "data": {
-      "id": "number",
-      "userFullName": "string",
-      "playTitle": "string",
-      "rating": "number",
-      "comment": "string",
-      "createdAt": "string",
-      "status": "PENDING"
-    }
-  }
-  ```
-
-#### Get Play Reviews
-
-- **URL**: `/api/reviews/play/{playId}`
-- **Method**: `GET`
-- **Auth Required**: No
-- **Description**: Get all approved reviews for a play
-- **Path Parameters**: playId (number)
-- **Success Response**: 200 OK
-  ```json
-  {
-    "status": 200,
-    "message": "Success",
-    "data": [
-      {
-        "id": "number",
-        "userFullName": "string",
-        "playTitle": "string",
-        "rating": "number",
-        "comment": "string",
-        "createdAt": "string",
-        "status": "APPROVED"
-      }
-    ]
-  }
-  ```
-
-#### Moderate Review
-
-- **URL**: `/api/reviews/{reviewId}/moderate`
-- **Method**: `PATCH`
-- **Auth Required**: Yes
-- **Roles**: STAFF, ADMIN
-- **Description**: Moderate a review (approve/reject)
-- **Path Parameters**: reviewId (number)
-- **Query Parameters**: status (APPROVED|REJECTED)
-- **Success Response**: 200 OK
-  ```json
-  {
-    "status": 200,
-    "message": "Success",
-    "data": {
-      "id": "number",
-      "userFullName": "string",
-      "playTitle": "string",
-      "rating": "number",
-      "comment": "string",
-      "createdAt": "string",
-      "status": "string"
-    }
-  }
-  ```
+}
+```
 
 ## Error Responses
-
-All endpoints can return the following error responses:
 
 ### 400 Bad Request
 
 ```json
 {
   "status": 400,
-  "message": "Error description",
-  "data": null
+  "message": "Invalid request parameters",
+  "errors": {
+    "field": "error message"
+  }
 }
 ```
 
@@ -334,8 +336,7 @@ All endpoints can return the following error responses:
 ```json
 {
   "status": 401,
-  "message": "Unauthorized",
-  "data": null
+  "message": "Authentication required"
 }
 ```
 
@@ -344,8 +345,7 @@ All endpoints can return the following error responses:
 ```json
 {
   "status": 403,
-  "message": "Access denied",
-  "data": null
+  "message": "Access denied"
 }
 ```
 
@@ -354,17 +354,33 @@ All endpoints can return the following error responses:
 ```json
 {
   "status": 404,
-  "message": "Resource not found",
-  "data": null
+  "message": "Resource not found"
 }
 ```
 
-### 500 Internal Server Error
+### 409 Conflict
 
 ```json
 {
-  "status": 500,
-  "message": "An unexpected error occurred",
-  "data": null
+  "status": 409,
+  "message": "Resource already exists"
 }
 ```
+
+## Notes
+
+1. All requests except `/auth/register` and `/auth/login` require JWT authentication
+2. JWT token should be included in the Authorization header: `Bearer <token>`
+3. Discount Types:
+   - NONE (no discount)
+   - CHILD (25% off)
+   - SENIOR (25% off)
+   - SOCIAL_CLUB (5% off, additional 5% for 20+ tickets)
+4. Additional discounts:
+   - Weekday Special: 10% off Monday-Thursday
+   - Last Hour: 10% off in the last hour before performance
+   - Theatre Package: Free ticket after booking 4 plays
+5. Seat Bands:
+   - Band A: Full price
+   - Band B: 80% of full price
+   - Band C: 60% of full price

@@ -26,10 +26,10 @@ public class Seat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "row_number", nullable = false)
     private String row;
 
-    @Column(nullable = false)
+    @Column(name = "seat_number", nullable = false)
     private Integer number;
 
     @Enumerated(EnumType.STRING)
@@ -40,6 +40,6 @@ public class Seat {
     @JoinColumn(name = "performance_id")
     private Performance performance;
 
-    @Column(nullable = false)
+    @Column(name = "is_booked", nullable = false)
     private Boolean isBooked = false;
 }

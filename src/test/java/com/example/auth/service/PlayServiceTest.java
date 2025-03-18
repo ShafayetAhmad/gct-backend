@@ -60,7 +60,7 @@ class PlayServiceTest {
     void getPlay_Success() {
         when(playRepository.findById(1L)).thenReturn(Optional.of(play));
 
-        PlayResponse response = playService.getPlay(1L);
+        PlayResponse response = playService.getPlayById(1L);
 
         assertNotNull(response);
         assertEquals(play.getId(), response.getId());
@@ -71,7 +71,7 @@ class PlayServiceTest {
     void getPlay_NotFound() {
         when(playRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> playService.getPlay(1L));
+        assertThrows(ResourceNotFoundException.class, () -> playService.getPlayById(1L));
         verify(playRepository).findById(1L);
     }
 }

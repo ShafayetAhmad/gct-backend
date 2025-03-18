@@ -30,6 +30,7 @@ public class PerformanceService {
         performance.setPlay(play);
         performance.setDateTime(request.getDateTime());
         performance.setBasePrice(request.getBasePrice());
+        performance.setAvailableSeats(request.getAvailableSeats());
 
         Performance savedPerformance = performanceRepository.save(performance);
 

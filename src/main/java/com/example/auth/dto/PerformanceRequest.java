@@ -19,4 +19,8 @@ public class PerformanceRequest {
     @NotNull(message = "Base price is required")
     @Positive(message = "Base price must be positive")
     private BigDecimal basePrice;
+
+    @NotNull(message = "Available seats is required")
+    @Positive(message = "Available seats must be positive")
+    private Integer availableSeats;
 }

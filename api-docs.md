@@ -180,9 +180,12 @@ Request Body:
 
 ```json
 {
-  "playId": 1,
-  "dateTime": "2024-04-15T19:00:00",
-  "basePrice": 50.0
+  "title": "performance 1",
+  "description": "string",
+  "dateTime": "2025-05-17T14:30:45.123",
+  "basePrice": "10",
+  "playId": "1",
+  "availableSeats": 100
 }
 ```
 

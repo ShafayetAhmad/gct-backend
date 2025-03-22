@@ -2,15 +2,15 @@ package com.example.auth.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
-import org.antlr.v4.runtime.misc.NotNull;
 
 @Data
 @Schema(description = "Payment request details")
 public class PaymentRequest {
     @Schema(description = "Booking ID", example = "1")
-    @NotNull
+    @NotNull(message = "Booking ID is required")
     private Long bookingId;
 
     @Schema(description = "16-digit card number", example = "4111111111111111")
